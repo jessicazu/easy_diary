@@ -1,0 +1,2 @@
+module DiarysHelper
+end
