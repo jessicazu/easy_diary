@@ -56,3 +56,4 @@ gem 'dotenv-rails' # 環境変数を利用するため
 gem 'omniauth-line' # LINEログインを利用するため
 gem 'devise' # ユーザーの認証機能を利用するため
 gem 'bootstrap-sass' # Bootstrapを利用するため
+gem 'line-bot-api' # Messaging APIを利用するため
