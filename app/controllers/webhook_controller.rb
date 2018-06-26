@@ -1,0 +1,3 @@
+class WebhookController < ApplicationController
+
+end
