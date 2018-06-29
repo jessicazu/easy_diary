@@ -1,3 +1,83 @@
-// Place all the styles related to the diarys controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+// プロフィール画像を丸く切り抜く
+.trim-image-to-circle {
+  width:  50px;
+  height: 50px;
+  border-radius: 50%;
+  background-position: center center;
+  display: inline-block;
+  background-repeat: no-repeat;
+  object-fit: cover;
+}
+
+.diary_index {
+  margin: 20px 0;
+  border: solid 1px rgb(210, 210, 210);
+  border-radius: 4px;
+  padding: 0 10px;
+
+  &--title {
+    padding: 15px 0 10px;
+
+    img {
+      align: middle;
+    }
+
+    span {
+      font-size: 22px;
+      padding-left: 10px;
+    }
+  }
+
+  &--content {
+    margin: 15px 0;
+
+    &--item {
+      margin: 5px 0;
+      border: solid 1px rgb(210, 210, 210);
+      border-radius: 3px;
+      padding: 10px;
+
+      * { vertical-align: middle; }
+
+      &--sun {
+        color: $Orange;
+        font-size: 26px;
+      }
+
+      &--cloud {
+        color: gray;
+        font-size: 24px;
+      }
+
+      &--umbrella {
+        color: blue;
+        font-size: 25px;
+      }
+
+      &--question {
+        color: black;
+        font-size: 26px;
+        margin: 0 5px 0 3px;
+      }
+
+      &--date {
+        padding-left: 5px;
+        font-size: 18px;
+      }
+
+      &--score {
+        font-size: 20px;
+        padding-left: 5px;
+      }
+
+      &--none_score {
+        font-size: 18px;
+        padding-left: 2px;
+      }
+
+      &--button {
+        float: right;
+      }
+    }
+  }
+}
