@@ -3,3 +3,8 @@
 @import "./diarys";
 @import "./flash";
 @import "bootstrap";
+
+// FontAwesome用
+.fontawesome-i2svg-pending body {
+	display: none;
+}
