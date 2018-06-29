@@ -33,7 +33,7 @@ class WebhookController < ApplicationController
               {
                 "type": "uri",
                 "label": "登録に進む",
-                "uri": "https://f547c81a.ngrok.io/users/sign_up"
+                "uri": "https://easy-diary.herokuapp.com/users/sign_up"
               }
             ],
             "title": "はじめまして！",
@@ -243,7 +243,7 @@ class WebhookController < ApplicationController
                         {
                           "type": "uri",
                           "label": "日記を見る",
-                          "uri": "https://5f5212dd.ngrok.io"
+                          "uri": "https://easy-diary.herokuapp.com/"
                         }
                       ],
                       "title": "日記の投稿が完了しました！",
