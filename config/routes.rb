@@ -5,6 +5,10 @@ Rails.application.routes.draw do
   }
 
   # diary
-  resources :diarys, only: [:index, :show]
-  root 'diarys#index'
+  resources :diaries, only: [:index, :show] do
+  end
+  root 'diaries#index'
+
+  # webhook
+  post '/callback' => 'webhook#callback'
 end
