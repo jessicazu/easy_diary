@@ -1,2 +1,38 @@
-<h1>Diarys#index</h1>
-<p>Find me in app/views/diarys/index.html.erb</p>
+<div class="col-xs-12 col-sm-8 col-sm-push-2 col-md-6 col-md-push-3">
+  <div class="diary_index">
+    <div class="diary_index--title">
+      <img src="<%= current_user.image %>" alt="" class="trim-image-to-circle">
+      <span><%= current_user.name %>さんの日記一覧</span>
+    </div>
+    <div class="diary_index--content">
+      <% @datas.each do |d| %>
+        <% if d.class == Diary %> <%# 日記データ %>
+          <div class="diary_index--content--item">
+            <% if d.feeling == "good" %>
+              <i class="far fa-sun diary_index--content--item--sun"></i>
+            <% elsif d.feeling == "normal" %>
+              <i class="fas fa-cloud diary_index--content--item--cloud"></i>
+            <% else %>
+              <i class="fas fa-umbrella diary_index--content--item--umbrella"></i>
+            <% end %>
+            <span class="diary_index--content--item--date"><%= d.created_at.strftime('%Y/%m/%d') %>:</span>
+
+            <% if d.score %>
+              <span class="diary_index--content--item--score"><%= d.score %>点</span>
+            <% else %>
+              <span class="diary_index--content--item--none_score">未入力</span>
+            <% end %>
+            <button type="button" class="btn btn-dark btn-sm diary_index--content--item--button">詳細</button>
+          </div>
+        <% else %> <%# 日付データ %>
+          <div class="diary_index--content--item">
+            <i class="fas fa-question diary_index--content--item--question"></i>
+            <span class="diary_index--content--item--date"><%= d.strftime('%Y/%m/%d') %>:</span>
+            <span class="diary_index--content--item--none_score">未入力</span>
+          </div>
+        <% end %>
+      <% end %>
+      <%= paginate @datas %>
+    </div>
+  </div>
+</div>
