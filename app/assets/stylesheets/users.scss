@@ -1,0 +1,31 @@
+.line-btn {
+  color: $White;
+  border-radius: 5px;
+  height: 44px;
+  text-align: center;
+  font-size: 16px;
+  background: $Line;
+  overflow: hidden;
+  text-decoration:none;
+  letter-spacing: 0.4px;
+  padding: 0 28px 0 20px;
+  
+  img {
+    width: 30px;
+    margin-right: 5px;
+    align: middle;
+  }
+
+  span {
+    position: relative;
+    top: 1px;
+  }
+}
+
+.sign_in {
+  margin: 20px 0;
+
+  &--button {
+    text-align: center;
+  }
+}
