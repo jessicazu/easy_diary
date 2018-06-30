@@ -1,0 +1,26 @@
+<div class="diary_show--content--left_chat">
+  <p>
+    どんなことが悪かったですか？
+  </p>
+</div>
+<div class="diary_show--content--right_chat">
+  <%= simple_format(@diary.detail) %>
+</div>
+
+<div class="diary_show--content--left_chat">
+  <p>
+    明日は良いことがあるといいですね！<br>
+    今日は100点満点で何点でしたか？
+  </p>
+</div>
+<div class="diary_show--content--right_chat">
+  <p>
+    <%= @diary.score %>点
+  </p>
+</div>
+
+<div class="diary_show--content--left_chat">
+  <p>
+    明日も、良い一日を。おやすみなさい♪
+  </p>
+</div>

@@ -1,2 +1,33 @@
-<h1>Diarys#show</h1>
-<p>Find me in app/views/diarys/show.html.erb</p>
+<div class="col-xs-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3">
+  <div class="diary_show">
+    <div class="diary_show--title">
+      2018/07/01の日記です
+    </div>
+    <div class="diary_show--content">
+      <div class="diary_show--content--left_chat">
+        <p>
+          本日はどのような一日でしたか？
+        </p>
+      </div>
+
+      <div class="diary_show--content--right_chat">
+        <p>
+          <%= @diary.feeling_japanese %>
+        </p>
+      </div>
+
+      <% case @diary.feeling %>
+      <% when "good" %>
+        <%= render "feeling_good" %>
+      <% when "normal" %>
+        <%= render "feeling_normal" %>
+      <% when "bad" %>
+        <%= render "feeling_bad" %>
+      <% end %>
+    </div>
+
+    <%= link_to root_path do %>
+      <div class="diary_show--button btn btn-dark btn-sm">戻る</div>
+    <% end %>
+  </div>
+</div>
