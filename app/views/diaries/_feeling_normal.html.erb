@@ -5,7 +5,11 @@
 </div>
 <div class="diary_show--content--right_chat">
   <p>
-    <%= @diary.impressive_event_exist ? "はい" : "いいえ" %>
+    <% if @diary.impressive_event_exist.nil? %>
+      (未入力)
+    <% else %>
+      <%= @diary.impressive_event_exist ? "はい" : "いいえ" %>
+    <% end %>
   </p>
 </div>
 
@@ -17,7 +21,11 @@
   </div>
   <div class="diary_show--content--right_chat">
     <p>
-      <%= @diary.impressive_event_good ? "はい" : "いいえ" %>
+      <% if @diary.impressive_event_good.nil? %>
+        (未入力)
+      <% else %>
+        <%= @diary.impressive_event_good ? "はい" : "いいえ" %>
+      <% end %>
     </p>
   </div>
 
@@ -38,7 +46,7 @@
 
 <div class="diary_show--content--right_chat">
   <p>
-    <%= @diary.score %>点
+    <%= @diary.score.present? ? @diary.score.to_s + "点" : "(未入力)" %>
   </p>
 </div>
 

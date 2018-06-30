@@ -4,7 +4,11 @@
   </p>
 </div>
 <div class="diary_show--content--right_chat">
-  <%= simple_format(@diary.detail) %>
+  <% if @diary.detail.present? %>
+    <%= simple_format(@diary.detail) %>
+  <% else %>
+    <p>(未入力)</p>
+  <% end %>
 </div>
 
 <div class="diary_show--content--left_chat">
@@ -15,7 +19,7 @@
 </div>
 <div class="diary_show--content--right_chat">
   <p>
-    <%= @diary.score %>点
+    <%= @diary.score.present? ? @diary.score.to_s + "点" : "(未入力)" %>
   </p>
 </div>
 
