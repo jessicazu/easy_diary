@@ -22,7 +22,10 @@
             <% else %>
               <span class="diary_index--content--item--none_score">未入力</span>
             <% end %>
-            <button type="button" class="btn btn-dark btn-sm diary_index--content--item--button">詳細</button>
+
+            <%= link_to diary_path(d) do %>
+              <button type="button" class="btn btn-dark btn-sm diary_index--content--item--button">詳細</button>
+            <% end %>
           </div>
         <% else %> <%# 日付データ %>
           <div class="diary_index--content--item">
