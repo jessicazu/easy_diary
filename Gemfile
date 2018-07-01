@@ -59,3 +59,4 @@ gem 'devise' # ユーザーの認証機能を利用するため
 gem 'bootstrap', '~> 4.1.1' # Bootstrap4を利用するため
 gem 'line-bot-api' # Messaging APIを利用するため
 gem 'kaminari' # ページネーションを利用するため
+gem 'tod' # 時刻のみのオブジェクトを利用するため
