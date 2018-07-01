@@ -1,4 +1,5 @@
 require 'line/bot'
+require 'tod/core_extensions'
 
 class WebhookController < ApplicationController
   protect_from_forgery except: [:callback]
@@ -26,7 +27,7 @@ class WebhookController < ApplicationController
       if user.blank? # イベントの送信者がユーザー登録していなかった場合、登録を促す
         message = {
           "type": "template",
-          "altText": "スマートフォンでご利用ください。",
+          "altText": "このサービスを利用するためには、Easy Diaryのユーザー登録をしてください。",
           "template": {
             "type": "buttons",
             "actions": [
@@ -47,8 +48,17 @@ class WebhookController < ApplicationController
         case event # イベントの種類で分岐
         when Line::Bot::Event::Postback # 選択肢をクリックした場合
 
-          if Diary.where(user_id: user.id, created_at: Time.zone.now.all_day, end: true).present? # すでに今日に日記を登録し終わっている場合
-            simple_message("すでに今日の日記は書いています。", event)
+          now = Time.now.to_time_of_day #現在時刻
+
+          if diary = Diary.where(user_id: user.id, created_at: Time.zone.now.all_day, end: false).present?
+            simple_message("すでに選択肢を選んでいます。取り消す場合は、「リセット」と入力してください。", event)
+            return
+          elsif Diary.where(user_id: user.id, created_at: Time.zone.now.all_day, end: true).present? # すでに今日に日記を登録している
+            simple_message("すでに今日の日記を書いています。書き直す場合は、「リセット」と入力してください。", event)
+            return
+          elsif Tod::TimeOfDay.new(0) <= now && Tod::TimeOfDay.new(21) > now # 0~21時の場合
+            simple_message("日記の投稿は、21〜24時に可能です。", event)
+            return
           end
 
 
@@ -67,7 +77,7 @@ class WebhookController < ApplicationController
             if diary.save
               message = {
                 "type": "template",
-                "altText": "スマートフォンでご利用ください。",
+                "altText": "何か印象的な出来事はありましたか？",
                 "template": {
                   "type": "confirm",
                   "actions": [
@@ -109,7 +119,7 @@ class WebhookController < ApplicationController
               if diary.save
                 message = {
                   "type": "template",
-                  "altText": "スマートフォンでご利用ください。",
+                  "altText": "それは良い出来事でしたか？",
                   "template": {
                     "type": "confirm",
                     "actions": [
@@ -186,13 +196,12 @@ class WebhookController < ApplicationController
           when Line::Bot::Event::MessageType::Text # イベントがテキストメッセージの場合
             text = event.message['text']
 
-            if text == "テスト" || text == "test"
-              first_action(event)
+            if text == "リセット"
+              reset_action(user, event)
               return
-            elsif text == "リセット"
-              diary = Diary.where(user_id: user.id, created_at: Time.zone.now.all_day).destroy_all
-              simple_message("今日の日記を消去しました。", event)
-              return
+            # elsif text == "テスト" || text == "test"
+            #   test_action(event)
+            #   return
             end
 
             if Diary.where(user_id: user.id, created_at: Time.zone.now.all_day, end: true).present? # すでに今日に日記を登録し終わっている場合
@@ -236,7 +245,7 @@ class WebhookController < ApplicationController
                 if diary.save
                   message = {
                     "type": "template",
-                    "altText": "スマートフォンでご利用ください。",
+                    "altText": "日記の投稿が完了しました！",
                     "template": {
                       "type": "buttons",
                       "actions": [
@@ -267,7 +276,7 @@ class WebhookController < ApplicationController
     head :ok
   end
 
-  def first_action(event) # 毎日21時に、Herokuでこのアクションを呼び出す。登録者のuidに対してPUSH MESSAGEを送る
+  def test_action(event)
     message = {
       "type": "template",
       "altText": "今日の日記をつけましょう！",
@@ -298,6 +307,16 @@ class WebhookController < ApplicationController
       }
     }
     client.reply_message(event['replyToken'], message)
+  end
+
+  def reset_action(user, event)
+    now = Time.now.to_time_of_day
+    if Tod::TimeOfDay.new(21) <= now && Tod::TimeOfDay.new(23, 59, 59) > now # 21~24時の場合
+      diary = Diary.where(user_id: user.id, created_at: Time.zone.now.all_day).destroy_all
+      simple_message("今日の日記を消去しました。", event)
+    else
+      simple_message("日記の消去は、21〜24時の間に可能です。", event)
+    end
   end
 
   private
