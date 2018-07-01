@@ -1,6 +1,6 @@
 desc "This task is called by the Heroku scheduler add-on"
 task :first_action => :environment do
-  puts "21時になりました。メッセージを送ります..."
+  puts "It's 21 o'clock. Sending message..."
   WebhookController.first_action
-  puts "完了しました。"
+  puts "done."
 end
