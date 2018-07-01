@@ -319,6 +319,49 @@ class WebhookController < ApplicationController
     end
   end
 
+  def self.first_action # 毎日21時に、Heroku Schedulerでこのアクションを呼び出す。
+    message = {
+      "type": "template",
+      "altText": "今日の日記をつけましょう！",
+      "template": {
+        "type": "buttons",
+        "actions": [
+          {
+            "type": "postback",
+            "label": "良かった",
+            "displayText": "良かった",
+            "data": "Feeling-Good"
+          },
+          {
+            "type": "postback",
+            "label": "普通",
+            "displayText": "普通",
+            "data": "Feeling-Normal"
+          },
+          {
+            "type": "postback",
+            "label": "悪かった",
+            "displayText": "悪かった",
+            "data": "Feeling-Bad"
+          }
+        ],
+        "title": "今日の日記をつけましょう！",
+        "text": "21時になりました。本日はどのような一日でしたか？"
+      }
+    }
+
+    client ||= Line::Bot::Client.new { |config|
+      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+    }
+
+    users = User.all
+    uids = []
+    users.each { |user| uids << user.uid }
+
+    response = client.multicast(uids, message)
+  end
+
   private
   def client
     @client ||= Line::Bot::Client.new { |config|
